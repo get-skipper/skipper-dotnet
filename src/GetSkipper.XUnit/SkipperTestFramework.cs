@@ -1,3 +1,4 @@
+using System.Reflection;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
@@ -17,16 +18,15 @@ namespace GetSkipper.XUnit;
 public sealed class SkipperTestFramework(IMessageSink messageSink)
     : XunitTestFramework(messageSink)
 {
-    protected override ITestFrameworkExecutor CreateExecutor(
-        global::Xunit.Abstractions.IReflectionAssemblyInfo assemblyInfo) =>
-        new SkipperExecutor(assemblyInfo, SourceInformationProvider, DiagnosticMessageSink);
+    protected override ITestFrameworkExecutor CreateExecutor(AssemblyName assemblyName) =>
+        new SkipperExecutor(assemblyName, SourceInformationProvider, DiagnosticMessageSink);
 }
 
 internal sealed class SkipperExecutor(
-    global::Xunit.Abstractions.IReflectionAssemblyInfo assemblyInfo,
+    AssemblyName assemblyName,
     ISourceInformationProvider sourceInformationProvider,
     IMessageSink diagnosticMessageSink)
-    : XunitTestFrameworkExecutor(assemblyInfo, sourceInformationProvider, diagnosticMessageSink)
+    : XunitTestFrameworkExecutor(assemblyName, sourceInformationProvider, diagnosticMessageSink)
 {
     protected override async void RunTestCases(
         IEnumerable<IXunitTestCase> testCases,

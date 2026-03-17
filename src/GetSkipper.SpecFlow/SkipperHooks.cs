@@ -29,7 +29,7 @@ public sealed class SkipperHooks(FeatureContext featureContext, ScenarioContext 
 {
     private static SkipperResolver? _resolver;
     private static readonly List<string> _discoveredIds = [];
-    private static readonly Lock _lock = new();
+    private static readonly object _lock = new();
 
     [BeforeTestRun]
     public static async Task BeforeTestRunAsync()

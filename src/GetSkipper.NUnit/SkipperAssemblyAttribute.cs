@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 
 namespace GetSkipper.NUnit;

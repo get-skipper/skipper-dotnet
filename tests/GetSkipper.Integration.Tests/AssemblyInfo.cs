@@ -6,6 +6,7 @@
 // Run: SKIPPER_SPREADSHEET_ID=1abc... GOOGLE_CREDS_B64=... dotnet test tests/GetSkipper.Integration.Tests
 // Run in sync mode: SKIPPER_MODE=sync SKIPPER_SPREADSHEET_ID=... GOOGLE_CREDS_B64=... dotnet test ...
 
+using Xunit;
 using GetSkipper.XUnit;
 
 [assembly: TestFramework("GetSkipper.XUnit.SkipperTestFramework", "GetSkipper.XUnit")]

@@ -17,7 +17,7 @@ public sealed class SkipperStateTests
         {
             _ = SkipperState.Resolver; // will throw if not initialized
         });
-        Assert.That(ex.Message, Does.Contain("SkipperConfig"));
+        Assert.That(ex!.Message, Does.Contain("SkipperConfig"));
     }
 
     [Test]

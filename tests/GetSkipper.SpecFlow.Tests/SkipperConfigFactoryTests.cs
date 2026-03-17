@@ -10,8 +10,8 @@ public sealed class SkipperConfigFactoryTests
     public void FromEnvironment_ThrowsWhenSpreadsheetIdMissing()
     {
         Environment.SetEnvironmentVariable("SKIPPER_SPREADSHEET_ID", null);
-        var ex = Assert.Throws<InvalidOperationException>(SkipperConfigFactory.FromEnvironment);
-        Assert.That(ex.Message, Does.Contain("SKIPPER_SPREADSHEET_ID"));
+        var ex = Assert.Throws<InvalidOperationException>(() => SkipperConfigFactory.FromEnvironment());
+        Assert.That(ex!.Message, Does.Contain("SKIPPER_SPREADSHEET_ID"));
     }
 
     [Test]
@@ -21,8 +21,8 @@ public sealed class SkipperConfigFactoryTests
         Environment.SetEnvironmentVariable("SKIPPER_CREDENTIALS_FILE", null);
         Environment.SetEnvironmentVariable("SKIPPER_CREDENTIALS_BASE64", null);
 
-        var ex = Assert.Throws<InvalidOperationException>(SkipperConfigFactory.FromEnvironment);
-        Assert.That(ex.Message, Does.Contain("SKIPPER_CREDENTIALS"));
+        var ex = Assert.Throws<InvalidOperationException>(() => SkipperConfigFactory.FromEnvironment());
+        Assert.That(ex!.Message, Does.Contain("SKIPPER_CREDENTIALS"));
 
         Environment.SetEnvironmentVariable("SKIPPER_SPREADSHEET_ID", null);
     }
