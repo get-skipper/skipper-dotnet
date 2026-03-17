@@ -6,6 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- CS1591: missing XML comment — doc is welcome but not required on every public member -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
     <RootNamespace>$(MSBuildProjectName.Replace('-','_'))</RootNamespace>
 
     <!-- NuGet metadata shared across all packages -->
