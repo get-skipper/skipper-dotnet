@@ -15,19 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetSkipper.Playwright", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetSkipper.SpecFlow", "src\GetSkipper.SpecFlow\GetSkipper.SpecFlow.csproj", "{A1B2C3D4-0006-0000-0000-000000000000}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetSkipper.Core.Tests", "tests\GetSkipper.Core.Tests\GetSkipper.Core.Tests.csproj", "{A1B2C3D4-0011-0000-0000-000000000000}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetSkipper.XUnit.Tests", "tests\GetSkipper.XUnit.Tests\GetSkipper.XUnit.Tests.csproj", "{A1B2C3D4-0012-0000-0000-000000000000}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetSkipper.NUnit.Tests", "tests\GetSkipper.NUnit.Tests\GetSkipper.NUnit.Tests.csproj", "{A1B2C3D4-0013-0000-0000-000000000000}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetSkipper.MSTest.Tests", "tests\GetSkipper.MSTest.Tests\GetSkipper.MSTest.Tests.csproj", "{A1B2C3D4-0014-0000-0000-000000000000}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetSkipper.Playwright.Tests", "tests\GetSkipper.Playwright.Tests\GetSkipper.Playwright.Tests.csproj", "{A1B2C3D4-0015-0000-0000-000000000000}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetSkipper.SpecFlow.Tests", "tests\GetSkipper.SpecFlow.Tests\GetSkipper.SpecFlow.Tests.csproj", "{A1B2C3D4-0016-0000-0000-000000000000}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetSkipper.Integration.Tests", "tests\GetSkipper.Integration.Tests\GetSkipper.Integration.Tests.csproj", "{A1B2C3D4-0017-0000-0000-000000000000}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetSkipper.Tests", "tests\GetSkipper.Tests\GetSkipper.Tests.csproj", "{A1B2C3D4-0010-0000-0000-000000000000}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,34 +47,10 @@ Global
 		{A1B2C3D4-0006-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1B2C3D4-0006-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1B2C3D4-0006-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A1B2C3D4-0011-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A1B2C3D4-0011-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A1B2C3D4-0011-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A1B2C3D4-0011-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A1B2C3D4-0012-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A1B2C3D4-0012-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A1B2C3D4-0012-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A1B2C3D4-0012-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A1B2C3D4-0013-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A1B2C3D4-0013-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A1B2C3D4-0013-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A1B2C3D4-0013-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A1B2C3D4-0014-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A1B2C3D4-0014-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A1B2C3D4-0014-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A1B2C3D4-0014-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A1B2C3D4-0015-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A1B2C3D4-0015-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A1B2C3D4-0015-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A1B2C3D4-0015-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A1B2C3D4-0016-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A1B2C3D4-0016-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A1B2C3D4-0016-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A1B2C3D4-0016-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A1B2C3D4-0017-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A1B2C3D4-0017-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A1B2C3D4-0017-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A1B2C3D4-0017-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1B2C3D4-0010-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1B2C3D4-0010-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1B2C3D4-0010-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1B2C3D4-0010-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

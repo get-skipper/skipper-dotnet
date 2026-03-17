@@ -1,9 +1,8 @@
 using System.Text;
-using System.Text.Json;
 using GetSkipper.Core.Credentials;
 using Xunit;
 
-namespace GetSkipper.Core.Tests;
+namespace GetSkipper.Tests.Core;
 
 public sealed class CredentialsTests
 {

@@ -1,20 +1,19 @@
 using GetSkipper.SpecFlow;
-using NUnit.Framework;
+using Xunit;
 
-namespace GetSkipper.SpecFlow.Tests;
+namespace GetSkipper.Tests.SpecFlow;
 
-[TestFixture]
-public sealed class SkipperConfigFactoryTests
+public sealed class SpecFlowSkipperConfigFactoryTests
 {
-    [Test]
+    [Fact]
     public void FromEnvironment_ThrowsWhenSpreadsheetIdMissing()
     {
         Environment.SetEnvironmentVariable("SKIPPER_SPREADSHEET_ID", null);
         var ex = Assert.Throws<InvalidOperationException>(() => SkipperConfigFactory.FromEnvironment());
-        Assert.That(ex!.Message, Does.Contain("SKIPPER_SPREADSHEET_ID"));
+        Assert.Contains("SKIPPER_SPREADSHEET_ID", ex.Message);
     }
 
-    [Test]
+    [Fact]
     public void FromEnvironment_ThrowsWhenCredentialsMissing()
     {
         Environment.SetEnvironmentVariable("SKIPPER_SPREADSHEET_ID", "test-id");
@@ -22,7 +21,7 @@ public sealed class SkipperConfigFactoryTests
         Environment.SetEnvironmentVariable("SKIPPER_CREDENTIALS_BASE64", null);
 
         var ex = Assert.Throws<InvalidOperationException>(() => SkipperConfigFactory.FromEnvironment());
-        Assert.That(ex!.Message, Does.Contain("SKIPPER_CREDENTIALS"));
+        Assert.Contains("SKIPPER_CREDENTIALS", ex.Message);
 
         Environment.SetEnvironmentVariable("SKIPPER_SPREADSHEET_ID", null);
     }

@@ -1,7 +1,7 @@
 using GetSkipper.Core;
 using Xunit;
 
-namespace GetSkipper.Core.Tests;
+namespace GetSkipper.Tests.Core;
 
 public sealed class TestIdHelperTests
 {

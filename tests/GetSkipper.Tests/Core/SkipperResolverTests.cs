@@ -2,7 +2,7 @@ using GetSkipper.Core;
 using GetSkipper.Core.Credentials;
 using Xunit;
 
-namespace GetSkipper.Core.Tests;
+namespace GetSkipper.Tests.Core;
 
 public sealed class SkipperResolverTests
 {
@@ -15,8 +15,7 @@ public sealed class SkipperResolverTests
     [Fact]
     public void IsTestEnabled_ReturnsTrueForUnknownTest()
     {
-        var json = "{}";
-        var resolver = SkipperResolver.FromJson(json, MakeConfig());
+        var resolver = SkipperResolver.FromJson("{}", MakeConfig());
         Assert.True(resolver.IsTestEnabled("any/test > Foo > Bar"));
     }
 

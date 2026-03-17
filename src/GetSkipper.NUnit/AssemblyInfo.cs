@@ -1,4 +1,4 @@
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("GetSkipper.Playwright")]
-[assembly: InternalsVisibleTo("GetSkipper.NUnit.Tests")]
+[assembly: InternalsVisibleTo("GetSkipper.Tests")]
