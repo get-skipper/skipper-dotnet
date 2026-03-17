@@ -4,7 +4,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- Core dependencies -->
-    <PackageVersion Include="Google.Apis.Sheets.v4" Version="1.68.0.3538" />
+    <PackageVersion Include="Google.Apis.Sheets.v4" Version="1.68.0.3547" />
     <PackageVersion Include="Google.Apis.Auth" Version="1.68.0" />
     <PackageVersion Include="System.Text.Json" Version="8.0.5" />
 
