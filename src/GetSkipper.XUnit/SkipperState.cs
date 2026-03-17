@@ -13,6 +13,8 @@ internal static class SkipperState
     private static readonly List<string> _discoveredIds = [];
     private static readonly object _lock = new();
 
+    internal static bool IsResolverSet => _resolver is not null;
+
     internal static SkipperResolver Resolver
     {
         get => _resolver ?? throw new InvalidOperationException(

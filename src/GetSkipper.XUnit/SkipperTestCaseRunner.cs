@@ -25,6 +25,9 @@ internal sealed class SkipperTestCaseRunner : XunitTestCaseRunner
 
     protected override async Task<RunSummary> RunTestAsync()
     {
+        if (!SkipperState.IsResolverSet)
+            return await base.RunTestAsync();
+
         var resolver = SkipperState.Resolver;
 
         // Build the test ID from the test case source info

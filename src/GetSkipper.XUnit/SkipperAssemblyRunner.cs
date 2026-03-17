@@ -24,9 +24,19 @@ internal sealed class SkipperAssemblyRunner(
         await base.AfterTestAssemblyStartingAsync();
 
         var assembly = ((IReflectionAssemblyInfo)TestAssembly.Assembly).Assembly;
-        var config = SkipperConfigBuilder.Build(assembly);
-        var resolver = new SkipperResolver(config);
 
+        SkipperConfig config;
+        try
+        {
+            config = SkipperConfigBuilder.Build(assembly);
+        }
+        catch (InvalidOperationException ex)
+        {
+            SkipperLogger.Warn($"Skipper not configured: {ex.Message} — all tests will run.");
+            return;
+        }
+
+        var resolver = new SkipperResolver(config);
         SkipperLogger.Log("Initialising Skipper resolver...");
         await resolver.InitializeAsync();
         SkipperState.Resolver = resolver;
@@ -35,6 +45,12 @@ internal sealed class SkipperAssemblyRunner(
 
     protected override async Task BeforeTestAssemblyFinishedAsync()
     {
+        if (!SkipperState.IsResolverSet)
+        {
+            await base.BeforeTestAssemblyFinishedAsync();
+            return;
+        }
+
         var resolver = SkipperState.Resolver;
 
         if (resolver.GetMode() == SkipperMode.Sync)
