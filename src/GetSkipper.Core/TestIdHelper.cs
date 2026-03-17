@@ -33,7 +33,7 @@ public static partial class TestIdHelper
                 filePath = filePath[cwd.Length..].TrimStart(Path.DirectorySeparatorChar);
         }
 
-        filePath = filePath.Replace(Path.DirectorySeparatorChar, '/');
+        filePath = filePath.Replace('\\', '/').Replace(Path.DirectorySeparatorChar, '/');
         return string.Join(" > ", new[] { filePath }.Concat(titlePath));
     }
 
