@@ -1,0 +1,59 @@
+name: Publish to NuGet
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: nuget
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Restore dependencies
+        run: dotnet restore skipper-dotnet.sln
+
+      - name: Build
+        run: dotnet build skipper-dotnet.sln --no-restore --configuration Release
+
+      - name: Run unit tests (gate before publish)
+        run: |
+          dotnet test skipper-dotnet.sln \
+            --no-build \
+            --configuration Release \
+            --filter "FullyQualifiedName!~Integration"
+
+      - name: Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Pack all packages
+        run: |
+          for project in \
+            src/GetSkipper.Core \
+            src/GetSkipper.XUnit \
+            src/GetSkipper.NUnit \
+            src/GetSkipper.MSTest \
+            src/GetSkipper.Playwright \
+            src/GetSkipper.SpecFlow; do
+            dotnet pack "$project" \
+              --no-build \
+              --configuration Release \
+              -p:Version=${{ steps.version.outputs.VERSION }} \
+              --output ./artifacts
+          done
+
+      - name: Push to NuGet.org
+        run: |
+          dotnet nuget push ./artifacts/*.nupkg \
+            --api-key ${{ secrets.NUGET_API_KEY }} \
+            --source https://api.nuget.org/v3/index.json \
+            --skip-duplicate

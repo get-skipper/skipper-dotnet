@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>GetSkipper.Playwright</PackageId>
+    <Description>Playwright for .NET integration for Skipper test-gating. Extends Microsoft.Playwright.NUnit base classes — swap PageTest for SkipperPageTest and all tests are gated automatically.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GetSkipper.NUnit\GetSkipper.NUnit.csproj" />
+    <PackageReference Include="Microsoft.Playwright.NUnit" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+</Project>

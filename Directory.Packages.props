@@ -1,0 +1,39 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Core dependencies -->
+    <PackageVersion Include="Google.Apis.Sheets.v4" Version="1.68.0.3538" />
+    <PackageVersion Include="Google.Apis.Auth" Version="1.68.0" />
+    <PackageVersion Include="System.Text.Json" Version="8.0.5" />
+
+    <!-- xUnit -->
+    <PackageVersion Include="xunit" Version="2.9.3" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="2.8.2" />
+    <PackageVersion Include="xunit.extensibility.execution" Version="2.9.3" />
+    <PackageVersion Include="xunit.extensibility.core" Version="2.9.3" />
+    <PackageVersion Include="xunit.v3.core" Version="1.0.0" />
+    <PackageVersion Include="xunit.v3.extensibility.core" Version="1.0.0" />
+
+    <!-- NUnit -->
+    <PackageVersion Include="NUnit" Version="4.2.2" />
+    <PackageVersion Include="NUnit3TestAdapter" Version="4.6.0" />
+
+    <!-- MSTest -->
+    <PackageVersion Include="MSTest.TestFramework" Version="3.6.3" />
+    <PackageVersion Include="MSTest.TestAdapter" Version="3.6.3" />
+
+    <!-- Playwright -->
+    <PackageVersion Include="Microsoft.Playwright.NUnit" Version="1.49.0" />
+
+    <!-- Reqnroll (SpecFlow open-source fork) -->
+    <PackageVersion Include="Reqnroll" Version="2.3.0" />
+    <PackageVersion Include="Reqnroll.NUnit" Version="2.3.0" />
+
+    <!-- Test infrastructure -->
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageVersion Include="coverlet.collector" Version="6.0.2" />
+    <PackageVersion Include="Moq" Version="4.20.72" />
+  </ItemGroup>
+</Project>

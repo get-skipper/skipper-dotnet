@@ -1,0 +1,20 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.nupkg
+*.snupkg
+TestResults/
+coverage/
+
+## Environment
+.env
+*.env.local
+service-account*.json
+!service-account.example.json
+
+## OS
+.DS_Store
+Thumbs.db

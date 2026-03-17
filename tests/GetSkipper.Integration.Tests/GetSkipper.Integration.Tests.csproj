@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <!-- Integration tests require real Google credentials — excluded from CI by default -->
+    <SkipIntegrationTests Condition="'$(SKIPPER_SPREADSHEET_ID)' == ''">true</SkipIntegrationTests>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\GetSkipper.XUnit\GetSkipper.XUnit.csproj" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="coverlet.collector" />
+  </ItemGroup>
+</Project>

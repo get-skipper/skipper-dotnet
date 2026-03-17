@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>GetSkipper.SpecFlow</PackageId>
+    <Description>Reqnroll (SpecFlow) BDD integration for Skipper test-gating. Add the package and configure it — all scenarios are gated automatically via [BeforeScenario] hooks with no changes to your step definitions.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GetSkipper.Core\GetSkipper.Core.csproj" />
+    <PackageReference Include="Reqnroll" />
+    <PackageReference Include="Reqnroll.NUnit" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+</Project>

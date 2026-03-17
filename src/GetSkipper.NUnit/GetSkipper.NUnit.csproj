@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>GetSkipper.NUnit</PackageId>
+    <Description>NUnit 3/4 integration for Skipper test-gating. Apply a single assembly attribute — all [Test] methods are checked automatically with no per-test changes required.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GetSkipper.Core\GetSkipper.Core.csproj" />
+    <PackageReference Include="NUnit" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+</Project>

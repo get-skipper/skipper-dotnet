@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>GetSkipper.MSTest</PackageId>
+    <Description>MSTest v3 integration for Skipper test-gating. Uses [GlobalTestInitialize] to hook into every test without requiring a base class or per-test changes.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GetSkipper.Core\GetSkipper.Core.csproj" />
+    <PackageReference Include="MSTest.TestFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+</Project>

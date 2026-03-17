@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>GetSkipper.Core</PackageId>
+    <Description>Core Google Sheets client and resolver for Skipper test-gating. Framework-agnostic — used by all GetSkipper.* integration packages.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Google.Apis.Sheets.v4" />
+    <PackageReference Include="Google.Apis.Auth" />
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+</Project>
