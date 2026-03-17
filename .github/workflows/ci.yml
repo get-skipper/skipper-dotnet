@@ -63,6 +63,7 @@ jobs:
         env:
           SKIPPER_SPREADSHEET_ID: ${{ secrets.SKIPPER_SPREADSHEET_ID }}
           GOOGLE_CREDS_B64: ${{ secrets.GOOGLE_CREDS_B64 }}
+          SKIPPER_SHEET_NAME: skipper-dotnet
         run: |
           dotnet test tests/GetSkipper.Integration.Tests \
             --no-build \
@@ -92,6 +93,7 @@ jobs:
           SKIPPER_MODE: sync
           SKIPPER_SPREADSHEET_ID: ${{ secrets.SKIPPER_SPREADSHEET_ID }}
           GOOGLE_CREDS_B64: ${{ secrets.GOOGLE_CREDS_B64 }}
+          SKIPPER_SHEET_NAME: skipper-dotnet
         run: |
           dotnet test tests/GetSkipper.Integration.Tests \
             --no-build \

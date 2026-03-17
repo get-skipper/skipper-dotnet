@@ -50,11 +50,15 @@ internal static class SkipperConfigBuilder
             : (IReadOnlyList<string>)attr.ReferenceSheets
                 .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
+        // SKIPPER_SHEET_NAME env var overrides the attribute value
+        var sheetName = Environment.GetEnvironmentVariable("SKIPPER_SHEET_NAME")
+            ?? attr.SheetName;
+
         return new SkipperConfig
         {
             SpreadsheetId = spreadsheetId,
             Credentials = credentials,
-            SheetName = attr.SheetName,
+            SheetName = sheetName,
             ReferenceSheets = referenceSheets,
         };
     }

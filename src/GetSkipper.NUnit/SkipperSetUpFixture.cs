@@ -86,11 +86,15 @@ public sealed class SkipperSetUpFixture
             : (IReadOnlyList<string>)attr.ReferenceSheets
                 .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
+        // SKIPPER_SHEET_NAME env var overrides the attribute value
+        var sheetName = Environment.GetEnvironmentVariable("SKIPPER_SHEET_NAME")
+            ?? attr.SheetName;
+
         return new SkipperConfig
         {
             SpreadsheetId = attr.SpreadsheetId,
             Credentials = credentials,
-            SheetName = attr.SheetName,
+            SheetName = sheetName,
             ReferenceSheets = referenceSheets,
         };
     }
