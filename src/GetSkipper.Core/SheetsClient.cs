@@ -1,5 +1,7 @@
+using System.Globalization;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
@@ -48,6 +50,8 @@ public sealed class FetchAllResult(
 /// </summary>
 public sealed class SheetsClient(SkipperConfig config)
 {
+    private static readonly Regex DateRe = new(@"^\d{4}-\d{2}-\d{2}$", RegexOptions.Compiled);
+
     /// <summary>Fetches the primary sheet and all reference sheets, then merges the results.</summary>
     public async Task<FetchAllResult> FetchAllAsync(CancellationToken ct = default)
     {
@@ -151,13 +155,7 @@ public sealed class SheetsClient(SkipperConfig config)
             {
                 var raw = row[disabledUntilIdx]?.ToString()?.Trim();
                 if (!string.IsNullOrEmpty(raw))
-                {
-                    if (DateTimeOffset.TryParse(raw, out var parsed))
-                        disabledUntil = parsed;
-                    else
-                        SkipperLogger.Warn(
-                            $"Row {i + 1} in \"{sheetName}\": invalid date \"{raw}\" — treating test as enabled.");
-                }
+                    disabledUntil = ParseDisabledUntil(raw, i + 1, sheetName);
             }
 
             var notes = notesIdx >= 0 && notesIdx < row.Count
@@ -169,6 +167,26 @@ public sealed class SheetsClient(SkipperConfig config)
 
         SkipperLogger.Log($"Sheet \"{sheetName}\": {entries.Count} entries parsed.");
         return new SheetFetchResult(sheetName, sheetId, rawRows, header, entries);
+    }
+
+    /// <summary>
+    /// Parses a <c>disabledUntil</c> string, enforcing YYYY-MM-DD format and UTC pinning.
+    /// Throws <see cref="ArgumentException"/> for any value that does not match the format.
+    /// Returns midnight of the day <em>after</em> the given date in UTC, so a test disabled
+    /// until <c>2026-04-01</c> re-enables at <c>2026-04-02T00:00:00Z</c> on every CI runner.
+    /// </summary>
+    internal static DateTimeOffset ParseDisabledUntil(string raw, int rowNum, string sheetName)
+    {
+        if (!DateRe.IsMatch(raw))
+            throw new ArgumentException(
+                $"[skipper] Row {rowNum} in \"{sheetName}\": invalid disabledUntil \"{raw}\". Use YYYY-MM-DD.");
+
+        var date = DateTime.ParseExact(raw, "yyyy-MM-dd", CultureInfo.InvariantCulture,
+            DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
+
+        // "Disabled until" means through end of that calendar day UTC.
+        // Return midnight of the following day so the comparison is simply UtcNow < disabledUntil.
+        return new DateTimeOffset(date.AddDays(1), TimeSpan.Zero);
     }
 
     internal async Task<SheetsService> BuildServiceAsync(CancellationToken ct = default)
