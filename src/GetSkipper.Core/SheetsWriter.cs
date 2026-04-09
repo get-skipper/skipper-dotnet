@@ -7,12 +7,21 @@ namespace GetSkipper.Core;
 /// Reconciles the primary sheet with the set of test IDs discovered during a test run.
 /// <list type="bullet">
 ///   <item>Appends rows for test IDs that are not yet in the sheet (with empty <c>disabledUntil</c>).</item>
-///   <item>Deletes rows for test IDs that are in the sheet but no longer discovered.</item>
+///   <item>Deletes rows for test IDs that are in the sheet but no longer discovered, when
+///   <c>SKIPPER_SYNC_ALLOW_DELETE=true</c> (default: <c>false</c>).</item>
 ///   <item>Never modifies reference sheets.</item>
 /// </list>
 /// </summary>
 public sealed class SheetsWriter(SkipperConfig config, SheetsService service)
 {
+    /// <summary>For unit-testing only — reads the SKIPPER_SYNC_ALLOW_DELETE env var.</summary>
+    internal static bool ReadAllowDeleteForTest()
+    {
+        var raw = Environment.GetEnvironmentVariable("SKIPPER_SYNC_ALLOW_DELETE") ?? string.Empty;
+        return string.Equals(raw.Trim(), "true", StringComparison.OrdinalIgnoreCase)
+            || raw.Trim() == "1";
+    }
+
     /// <summary>
     /// Reconciles the spreadsheet with <paramref name="discoveredTestIds"/>.
     /// Should be called once, after all tests have run.
@@ -53,6 +62,25 @@ public sealed class SheetsWriter(SkipperConfig config, SheetsService service)
         }
 
         // --- Delete stale rows (in descending order to avoid index shifting) ---
+        //
+        // SKIPPER_SYNC_ALLOW_DELETE (default: false) — orphaned rows are only deleted when
+        // explicitly opted in, preventing accidental data loss.
+        if (staleNormalized.Count > 0)
+        {
+            var raw = Environment.GetEnvironmentVariable("SKIPPER_SYNC_ALLOW_DELETE") ?? string.Empty;
+            var allowDelete = string.Equals(raw.Trim(), "true", StringComparison.OrdinalIgnoreCase)
+                || raw.Trim() == "1";
+
+            if (!allowDelete)
+            {
+                SkipperLogger.Warn(
+                    $"Sync: {staleNormalized.Count} orphaned row(s) would be deleted but " +
+                    "SKIPPER_SYNC_ALLOW_DELETE is not set — skipping deletion. " +
+                    "Set SKIPPER_SYNC_ALLOW_DELETE=true to enable.");
+                staleNormalized.Clear();
+            }
+        }
+
         if (staleNormalized.Count > 0)
         {
             var rawRows = primary.RawRows;

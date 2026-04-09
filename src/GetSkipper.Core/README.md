@@ -210,6 +210,9 @@ Credentials = new ServiceAccountCredentials(
 | `SKIPPER_SPREADSHEET_ID` | — | Spreadsheet ID (used with `SpreadsheetIdEnvVar`) |
 | `GOOGLE_CREDS_B64` | — | Base-64 credentials (used with `CredentialsEnvVar`) |
 | `SKIPPER_DEBUG` | — | Set to any value for verbose logging |
+| `SKIPPER_FAIL_OPEN` | `true` | When `true`, an API failure falls back to the local cache (if valid) or runs all tests. Set to `false` to restore the original crash behaviour. |
+| `SKIPPER_CACHE_TTL` | `300` | Seconds a local `.skipper-cache.json` file remains valid as a fallback after an API failure. |
+| `SKIPPER_SYNC_ALLOW_DELETE` | `false` | In `sync` mode, orphaned rows are only deleted when this is `true`. By default they are warned about but left untouched. |
 
 ---
 
