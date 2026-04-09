@@ -1,3 +1,4 @@
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using Google.Apis.Sheets.v4;
 
@@ -187,7 +188,8 @@ public sealed class SkipperResolver
                 TtlSeconds = ttlSeconds,
                 Entries = _cache,
             };
-            var json = JsonSerializer.Serialize(payload);
+            var json = JsonSerializer.Serialize(payload,
+                new JsonSerializerOptions { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping });
             File.WriteAllText(LocalCacheFile, json);
             SkipperLogger.Log($"[skipper] Local cache written to {LocalCacheFile}.");
         }
@@ -208,7 +210,7 @@ public sealed class SkipperResolver
             var payload = JsonSerializer.Deserialize<LocalCachePayload>(json,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-            if (payload?.Entries is null)
+            if (payload is null || payload.Entries is null)
                 return false;
 
             var ageSeconds = DateTimeOffset.UtcNow.ToUnixTimeSeconds() - payload.WrittenAtUtcUnix;
