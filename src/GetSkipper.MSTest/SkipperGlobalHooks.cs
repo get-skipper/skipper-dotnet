@@ -81,7 +81,7 @@ public static class SkipperGlobalHooks
     }
 
     /// <summary>
-    /// Syncs the spreadsheet (only in <c>SKIPPER_MODE=sync</c>).
+    /// Syncs the spreadsheet (only in <c>SKIPPER_MODE=sync</c>) and generates the quarantine report.
     /// Call this from your own <c>[GlobalTestCleanup]</c> method.
     /// </summary>
     public static async Task AfterAllTestsAsync(CancellationToken ct = default)
@@ -89,11 +89,17 @@ public static class SkipperGlobalHooks
         if (!SkipperState.IsInitialized) return;
 
         var resolver = SkipperState.Resolver!;
-        if (resolver.GetMode() != SkipperMode.Sync) return;
 
-        SkipperLogger.Log("Syncing spreadsheet (MSTest)...");
-        var writer = resolver.GetWriter();
-        await writer.SyncAsync(SkipperState.GetDiscoveredIds(), ct);
-        SkipperLogger.Log("Sync complete.");
+        if (resolver.GetMode() == SkipperMode.Sync)
+        {
+            SkipperLogger.Log("Syncing spreadsheet (MSTest)...");
+            var writer = resolver.GetWriter();
+            await writer.SyncAsync(SkipperState.GetDiscoveredIds(), ct);
+            SkipperLogger.Log("Sync complete.");
+        }
+
+        // Generate and write quarantine report
+        var reporter = new SkipperReporter(resolver);
+        reporter.ExecuteReport();
     }
 }

@@ -54,12 +54,19 @@ public sealed class SkipperSetUpFixture
     [OneTimeTearDown]
     public async Task OneTimeTearDownAsync()
     {
-        if (SkipperState.Resolver.GetMode() != SkipperMode.Sync) return;
+        var resolver = SkipperState.Resolver;
 
-        SkipperLogger.Log("Syncing spreadsheet...");
-        var writer = SkipperState.Resolver.GetWriter();
-        await writer.SyncAsync(SkipperState.GetDiscoveredIds());
-        SkipperLogger.Log("Sync complete.");
+        if (resolver.GetMode() == SkipperMode.Sync)
+        {
+            SkipperLogger.Log("Syncing spreadsheet...");
+            var writer = resolver.GetWriter();
+            await writer.SyncAsync(SkipperState.GetDiscoveredIds());
+            SkipperLogger.Log("Sync complete.");
+        }
+
+        // Generate and write quarantine report
+        var reporter = new SkipperReporter(resolver);
+        reporter.ExecuteReport();
     }
 
     private static SkipperConfig BuildConfig(SkipperConfigAttribute attr)

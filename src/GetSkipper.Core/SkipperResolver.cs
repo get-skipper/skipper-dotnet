@@ -246,6 +246,15 @@ public sealed class SkipperResolver
         return int.TryParse(raw, out var v) ? v : defaultValue;
     }
 
+    /// <summary>
+    /// Exposes the cache entries for reporting. Used by <see cref="SkipperReporter"/>.
+    /// </summary>
+    internal IEnumerable<KeyValuePair<string, string?>> GetCacheEntriesForReporting()
+    {
+        EnsureInitialized();
+        return _cache;
+    }
+
     // ── Internal test-only hooks ──────────────────────────────────────────
 
     /// <summary>For unit-testing only — exposes <see cref="WriteLocalCache"/>.</summary>

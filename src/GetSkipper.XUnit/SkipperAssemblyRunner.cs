@@ -62,6 +62,10 @@ internal sealed class SkipperAssemblyRunner(
             SkipperLogger.Log("Sync complete.");
         }
 
+        // Generate and write quarantine report
+        var reporter = new SkipperReporter(resolver);
+        reporter.ExecuteReport();
+
         await base.BeforeTestAssemblyFinishedAsync();
     }
 
