@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-05-03
+
+### Added
+
+- **Quarantine Report**: automated reporting at the end of each test run showing test suppression metrics.
+  - `skipper-report.json`: machine-readable report with all metrics.
+  - GitHub Actions summary: markdown output to `GITHUB_STEP_SUMMARY` (or stdout fallback).
+  - Metrics tracked: currently suppressed tests, tests expiring this week, tests re-enabled since last run, quarantine-days of debt.
+  - Works with all test frameworks (xUnit, NUnit, MSTest) without configuration.
+
 ## [1.1.0] - 2026-04-10
 
 ### Added

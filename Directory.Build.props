@@ -19,6 +19,6 @@
     <PackageTags>skipper;test-gating;google-sheets;testing</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageProjectUrl>https://github.com/get-skipper/skipper-dotnet</PackageProjectUrl>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
   </PropertyGroup>
 </Project>
