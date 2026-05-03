@@ -1,5 +1,6 @@
 using GetSkipper.Core;
 using System.Text.Json;
+using Xunit;
 
 namespace GetSkipper.Tests.Core;
 
