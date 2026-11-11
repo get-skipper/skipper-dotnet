@@ -45,7 +45,7 @@ public sealed class SkipperResolver
     /// <para>Environment variables that affect behaviour:</para>
     /// <list type="bullet">
     ///   <item><c>SKIPPER_FAIL_OPEN</c> (default <c>true</c>) — when the API is unreachable and no
-    ///   valid cache exists, run all tests instead of throwing.</item>
+    ///   valid cache exists, run all tests instead of throwing. The local cache is tried either way.</item>
     ///   <item><c>SKIPPER_CACHE_TTL</c> (default <c>300</c> seconds) — after a successful fetch
     ///   the result is written to <see cref="LocalCacheFile"/>. On the next API failure the file
     ///   is used if it was written within this many seconds.</item>
@@ -72,18 +72,23 @@ public sealed class SkipperResolver
             // Persist a local fallback cache for future API failures.
             WriteLocalCache(cacheTtl);
         }
-        catch (Exception ex) when (failOpen)
+        catch (Exception ex)
         {
-            SkipperLogger.Warn($"[skipper] API call failed: {ex.Message}. Attempting local cache fallback.");
-
+            // Always printed (not only with SKIPPER_DEBUG): these change which tests run.
             if (TryReadLocalCache(cacheTtl))
             {
-                SkipperLogger.Log($"Resolver initialised from local cache with {_cache.Count} entries.");
+                Console.Error.WriteLine(
+                    $"[skipper] WARN: Could not load the spreadsheet ({ex.Message}) — using local cache ({_cache.Count} entries, SKIPPER_CACHE_TTL).");
+            }
+            else if (failOpen)
+            {
+                Console.Error.WriteLine(
+                    $"[skipper] WARN: Could not load the spreadsheet ({ex.Message}) and no valid local cache — running all tests (fail-open).");
+                _cache = new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase);
             }
             else
             {
-                SkipperLogger.Warn("[skipper] No valid local cache found — running all tests (fail-open).");
-                _cache = new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase);
+                throw;
             }
 
             _initialized = true;
@@ -195,7 +200,7 @@ public sealed class SkipperResolver
         }
         catch (Exception ex)
         {
-            SkipperLogger.Warn($"[skipper] Failed to write local cache: {ex.Message}");
+            SkipperLogger.Warn($"Failed to write local cache: {ex.Message}");
         }
     }
 
@@ -216,7 +221,7 @@ public sealed class SkipperResolver
             var ageSeconds = DateTimeOffset.UtcNow.ToUnixTimeSeconds() - payload.WrittenAtUtcUnix;
             if (ageSeconds > ttlSeconds)
             {
-                SkipperLogger.Warn($"[skipper] Local cache is {ageSeconds}s old (TTL={ttlSeconds}s) — ignoring.");
+                SkipperLogger.Warn($"Local cache is {ageSeconds}s old (TTL={ttlSeconds}s) — ignoring.");
                 return false;
             }
 
@@ -225,7 +230,7 @@ public sealed class SkipperResolver
         }
         catch (Exception ex)
         {
-            SkipperLogger.Warn($"[skipper] Failed to read local cache: {ex.Message}");
+            SkipperLogger.Warn($"Failed to read local cache: {ex.Message}");
             return false;
         }
     }

@@ -30,33 +30,7 @@ internal sealed class SkipperTestCaseRunner : XunitTestCaseRunner
 
         var resolver = SkipperState.Resolver;
 
-        // Build the test ID: prefer source file from SourceInformation (populated when
-        // PDB-backed discovery is active); fall back to a namespace-derived pseudo-path
-        // (same convention used by the NUnit and MSTest integrations).
-        var sourceInfo = TestCase.SourceInformation;
-        var fqClassName = TestCase.TestMethod.TestClass.Class.Name;
-        var methodName = TestCase.TestMethod.Method.Name;
-
-        string filePath;
-        if (!string.IsNullOrEmpty(sourceInfo?.FileName))
-        {
-            filePath = sourceInfo.FileName;
-        }
-        else
-        {
-            // Derive "Namespace/SubNamespace/ClassName.cs" from the fully-qualified class name
-            var lastDot = fqClassName.LastIndexOf('.');
-            var ns = lastDot > 0 ? fqClassName[..lastDot] : string.Empty;
-            var simpleClass = lastDot > 0 ? fqClassName[(lastDot + 1)..] : fqClassName;
-            var nsPath = ns.Replace('.', '/');
-            filePath = string.IsNullOrEmpty(nsPath) ? $"{simpleClass}.cs" : $"{nsPath}/{simpleClass}.cs";
-        }
-
-        // Use only the simple class name in the title path (namespace is already in the file path)
-        var lastDotForTitle = fqClassName.LastIndexOf('.');
-        var className = lastDotForTitle > 0 ? fqClassName[(lastDotForTitle + 1)..] : fqClassName;
-
-        var testId = TestIdHelper.Build(filePath, [className, methodName]);
+        var testId = BuildTestId(TestCase.TestMethod.TestClass.Class.Name, TestCase.TestMethod.Method.Name);
         SkipperState.RecordDiscoveredId(testId);
 
         if (!resolver.IsTestEnabled(testId))
@@ -77,5 +51,20 @@ internal sealed class SkipperTestCaseRunner : XunitTestCaseRunner
         }
 
         return await base.RunTestAsync();
+    }
+
+    /// <summary>
+    /// Builds "Namespace/Sub/ClassName.cs > ClassName > Method", the same convention used by the
+    /// NUnit and MSTest integrations. <c>SourceInformation.FileName</c> is deliberately ignored:
+    /// it is an absolute, machine-specific PDB path, so IDs would differ between machines.
+    /// </summary>
+    internal static string BuildTestId(string fqClassName, string methodName)
+    {
+        var lastDot = fqClassName.LastIndexOf('.');
+        var ns = lastDot > 0 ? fqClassName[..lastDot] : string.Empty;
+        var className = lastDot > 0 ? fqClassName[(lastDot + 1)..] : fqClassName;
+        var nsPath = ns.Replace('.', '/');
+        var filePath = string.IsNullOrEmpty(nsPath) ? $"{className}.cs" : $"{nsPath}/{className}.cs";
+        return TestIdHelper.Build(filePath, [className, methodName]);
     }
 }

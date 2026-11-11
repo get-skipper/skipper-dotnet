@@ -103,7 +103,7 @@ public sealed class SkipperReporter
         }
         catch (Exception ex)
         {
-            SkipperLogger.Warn($"[skipper] Failed to read previous report: {ex.Message}");
+            SkipperLogger.Warn($"Failed to read previous report: {ex.Message}");
             return [];
         }
     }
@@ -126,7 +126,7 @@ public sealed class SkipperReporter
         }
         catch (Exception ex)
         {
-            SkipperLogger.Warn($"[skipper] Failed to write report JSON: {ex.Message}");
+            SkipperLogger.Warn($"Failed to write report JSON: {ex.Message}");
         }
     }
 
@@ -191,7 +191,7 @@ public sealed class SkipperReporter
             }
             catch (Exception ex)
             {
-                SkipperLogger.Warn($"[skipper] Failed to write GitHub summary: {ex.Message}");
+                SkipperLogger.Warn($"Failed to write GitHub summary: {ex.Message}");
                 SkipperLogger.Log(markdown);
             }
         }

@@ -158,6 +158,8 @@ SKIPPER_SPREADSHEET_ID=1abc... SKIPPER_CREDENTIALS_FILE=./service-account.json d
 | Playwright | `Tests/E2E/LoginTests.cs > LoginTests > UserCanLogin` |
 | Reqnroll | `Features/Auth/Login.feature > User authentication > User can log in` |
 
+For xUnit and MSTest the file part is derived from the namespace, not from the file on disk: class `Tests.Unit.AuthTests` → `Tests/Unit/AuthTests.cs`. This keeps IDs identical on every machine.
+
 ---
 
 ## Sync Mode

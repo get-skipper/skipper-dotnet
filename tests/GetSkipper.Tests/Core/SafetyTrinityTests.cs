@@ -93,6 +93,34 @@ public sealed class SafetyTrinityTests : IDisposable
         Assert.False(restored, "Expired cache should not be loaded.");
     }
 
+    [Fact]
+    public async Task InitializeAsync_ApiFails_UsesLocalCacheEvenWithFailOpenFalse()
+    {
+        var future = DateTimeOffset.UtcNow.AddDays(1).ToString("O");
+        var payload = new
+        {
+            writtenAtUtcUnix = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
+            ttlSeconds = 300,
+            entries = new Dictionary<string, string?> { ["tests/foo.cs > foo > bar"] = future },
+        };
+        File.WriteAllText(_cacheFile, JsonSerializer.Serialize(payload));
+        Environment.SetEnvironmentVariable("SKIPPER_FAIL_OPEN", "false");
+
+        // "fake-key" is not a valid private key, so the API call fails.
+        var resolver = new SkipperResolver(MakeConfig()) { LocalCacheFile = _cacheFile };
+        await resolver.InitializeAsync();
+
+        Assert.False(resolver.IsTestEnabled("tests/foo.cs > foo > bar"));
+    }
+
+    [Fact]
+    public async Task InitializeAsync_ApiFails_NoCache_FailOpenFalse_Throws()
+    {
+        Environment.SetEnvironmentVariable("SKIPPER_FAIL_OPEN", "false");
+        var resolver = new SkipperResolver(MakeConfig()) { LocalCacheFile = _cacheFile };
+        await Assert.ThrowsAnyAsync<Exception>(() => resolver.InitializeAsync());
+    }
+
     // ── SKIPPER_FAIL_OPEN (behaviour is integration-level; env var reading tested here) ──
 
     [Theory]

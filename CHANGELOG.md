@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-11-11
+
+### Fixed
+
+- Cache fallback and fail-open warnings are now always printed to stderr (not only with `SKIPPER_DEBUG`) and include the underlying error (#6).
+- With `SKIPPER_FAIL_OPEN=false` the local cache is now still used when the API fails; only the "run all tests" fallback is disabled, matching the other SDKs (#6).
+- xUnit: the testId no longer uses the absolute, machine-specific `SourceInformation.FileName`; it is always derived from the namespace, like NUnit and MSTest (#7).
+- Removed the duplicated `[skipper]` prefix from some warnings.
+
 ## [1.2.0] - 2026-05-03
 
 ### Added
