@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.1] - 2026-11-11
+
+### Changed
+
+- Packages are published to NuGet.org with Trusted Publishing (OIDC) instead of an API key. 1.3.0 was never published to NuGet; 1.3.1 contains the same changes.
+
 ## [1.3.0] - 2026-11-11
 
 ### Fixed
